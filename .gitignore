@@ -1,4 +1,29 @@
+# dependencies
 node_modules/
+
+# environment variables
 .env
-uploads/
+.env.local
+
+# uploads
+server/uploads/*
+!server/uploads/.gitkeep
+
+# build files
 dist/
+build/
+
+# logs
+*.log
+npm-debug.log*
+
+# deployment
+.vercel/
+
+# editor files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
