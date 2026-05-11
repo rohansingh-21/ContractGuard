@@ -2,6 +2,14 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const path = require('path')
+const fs = require('fs')
+
+// Ensure uploads directory exists (critical for Render deployment)
+const uploadsDir = path.join(__dirname, 'uploads')
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true })
+  console.log('Created uploads directory:', uploadsDir)
+}
 
 const authRoutes = require('./routes/auth')
 const analyzeRoutes = require('./routes/analyze')

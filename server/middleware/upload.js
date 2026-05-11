@@ -1,9 +1,20 @@
 const multer = require('multer')
 const path = require('path')
+const fs = require('fs')
+
+// Ensure uploads directory exists (Render's filesystem is ephemeral)
+const uploadsDir = path.join(__dirname, '..', 'uploads')
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true })
+}
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '..', 'uploads'))
+    // Also check at request time in case dir was cleaned up
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true })
+    }
+    cb(null, uploadsDir)
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname)
